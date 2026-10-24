@@ -17,7 +17,7 @@ import { fetchWithMirrors } from './gh-mirrors.js';
 import { toolDescription, enginePrompt } from './tools-desc.js';
 import { loadUiState, saveUiState, uiSnapshot, asUrl, uiStateFile, UI_DEFAULT, UI_CATEGORY_DEFS, UI_CUSTOM_MAX, installCustomEngines } from './ui-settings.js';
 function apply(ctx, config) {
-  const logger = ctx.logger?.('websearch-direct') || console;
+  const logger = ctx.logger?.('websearch-local') || console;
 
   // 设置卡片的数据面：启动即装载（文件不存在 = 全默认），卡片保存后热更新。
   let uiState = loadUiState();
@@ -77,7 +77,7 @@ function apply(ctx, config) {
     // layer throws on it, and the seam layer used to look like it worked.
     if (explicitEngine && !ENGINES[explicitEngine] && !COMPOSITES[explicitEngine] && !ENGINE_ALIASES[explicitEngine]) {
       logger?.warn?.(
-        `websearch-direct: 未知引擎 "${explicitEngine}"，已忽略该提示并按 engineOrder 顺序兜底。` +
+        `websearch-local: 未知引擎 "${explicitEngine}"，已忽略该提示并按 engineOrder 顺序兜底。` +
           `可用：${ALL_ENGINE_IDS.join(' / ')}`
       );
     }
@@ -104,7 +104,7 @@ function apply(ctx, config) {
       attempted.push(wanted);
       const pin = pinnedRoute(wanted);
       if (pin && !(ENGINES_META[engine]?.routes || []).some((r) => r.label.includes(pin))) {
-        logger?.warn?.(`websearch-direct: 别名 "${wanted}" 指定的入口 "${pin}" 在 ${engine} 上不存在，退回该引擎全部入口。`);
+        logger?.warn?.(`websearch-local: 别名 "${wanted}" 指定的入口 "${pin}" 在 ${engine} 上不存在，退回该引擎全部入口。`);
       }
       try {
         const raw = await fn(String(query), {
@@ -134,7 +134,7 @@ function apply(ctx, config) {
         };
       } catch (err) {
         errors.push(`${wanted}: ${err.message}`);
-        logger?.warn?.(`websearch-direct: ${wanted} 失败 — ${err.message}；尝试下一个引擎`);
+        logger?.warn?.(`websearch-local: ${wanted} 失败 — ${err.message}；尝试下一个引擎`);
       }
     }
 
@@ -149,7 +149,7 @@ function apply(ctx, config) {
 
   ctx.effect(() =>
     ctx.web?.registerSearchProvider({
-      id: 'websearch-direct',
+      id: 'websearch-local',
       // No credentials to check: this provider is always ready, which is the
       // whole point — the agent never hits WEB_PROVIDER_CREDENTIAL_MISSING.
       available: () => true,
@@ -162,7 +162,7 @@ function apply(ctx, config) {
 
   ctx.effect(() =>
     ctx.web?.registerFetchProvider({
-      id: 'websearch-direct',
+      id: 'websearch-local',
       available: () => !isOff(resolved().enableFetch),
       async fetch(req, signal) {
         const c = opts();
@@ -258,7 +258,7 @@ function apply(ctx, config) {
           })
         );
         return () => dispose();
-      }, 'websearch-direct: engine tool');
+      }, 'websearch-local: engine tool');
     });
 
     /* Prompt guidance sits immediately after the stock `web_search` section
@@ -275,10 +275,10 @@ function apply(ctx, config) {
         } catch {
           return () => {};
         }
-      }, 'websearch-direct: engine prompt');
+      }, 'websearch-local: engine prompt');
     });
   } else {
-    logger?.info?.('websearch-direct: @deepseek-ai/dsh-tools 不可用，跳过 web_search_engine 工具注册');
+    logger?.info?.('websearch-local: @deepseek-ai/dsh-tools 不可用，跳过 web_search_engine 工具注册');
   }
 
   /* ---- 设置卡片的数据面：GET/POST 配置 + 恢复默认（防御式注册） ---- */
@@ -401,7 +401,7 @@ function apply(ctx, config) {
 
       const d1 = wctx.webServer.register({
         kind: 'exact',
-        path: '/dsh-websearch-direct/api/config',
+        path: '/dsh-websearch-local/api/config',
         handler: async (req, res) => {
           try {
             if (req.method === 'GET') return json(res, 200, uiSnapshot(uiState));
@@ -418,7 +418,7 @@ function apply(ctx, config) {
       });
       const d2 = wctx.webServer.register({
         kind: 'exact',
-        path: '/dsh-websearch-direct/api/reset',
+        path: '/dsh-websearch-local/api/reset',
         handler: async (req, res) => {
           try {
             if (req.method !== 'POST') return json(res, 405, { error: 'method not allowed' });
@@ -433,7 +433,7 @@ function apply(ctx, config) {
         d1();
         d2();
       };
-    }, 'websearch-direct: settings card routes');
+    }, 'websearch-local: settings card routes');
   });
 }
 

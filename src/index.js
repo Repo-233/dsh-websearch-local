@@ -1,5 +1,5 @@
 /**
- * dsh-websearch-direct — v0.3
+ * dsh-websearch-local — v0.5
  *
  * A zero-API-key web search / fetch provider for DeepSeek Harness (dsh).
  *

@@ -86,7 +86,7 @@ async function buildProxy(proxyUrl, logger) {
     if (!proxyWarned) {
       proxyWarned = true;
       logger?.warn?.(
-        `websearch-direct: 已配置 proxyUrl=${redactSensitive(proxyUrl)}，但无法解析 undici（ProxyAgent/fetch 不可用），` +
+        `websearch-local: 已配置 proxyUrl=${redactSensitive(proxyUrl)}，但无法解析 undici（ProxyAgent/fetch 不可用），` +
           '本次代理不会生效。修法：把 undici 装进插件所在的 node_modules，' +
           '或设置 NODE_USE_ENV_PROXY=1 让 Node 直接读取 HTTP(S)_PROXY 环境变量。'
       );
@@ -102,7 +102,7 @@ async function buildProxy(proxyUrl, logger) {
   } catch (err) {
     if (!proxyWarned) {
       proxyWarned = true;
-      logger?.warn?.(`websearch-direct: ProxyAgent 构造失败（${err.message}），代理不会生效。`);
+      logger?.warn?.(`websearch-local: ProxyAgent 构造失败（${err.message}），代理不会生效。`);
     }
     return NO_PROXY();
   }

@@ -215,7 +215,7 @@ async function runEngine(engineId, query, opts) {
         const items = await runRoute(def, route, query, opts);
         markRouteOk(engineId, route);
         if (!items.length) {
-          opts.logger?.debug?.(`websearch-direct: ${def.label} 经「${route.label}」无结果`);
+          opts.logger?.debug?.(`websearch-local: ${def.label} 经「${route.label}」无结果`);
         }
         return { items, via: route.label, ms: Date.now() - t0, failures };
       } catch (err) {
@@ -223,7 +223,7 @@ async function runEngine(engineId, query, opts) {
         if (attempt < RETRY_MAX && isRetryable(err.message)) {
           const delay = Math.min(RETRY_BASE_MS * 2 ** attempt, RETRY_CAP_MS);
           opts.logger?.warn?.(
-            `websearch-direct: ${def.label} 入口「${route.label}」暂败（${redactSensitive(err.message)}），` +
+            `websearch-local: ${def.label} 入口「${route.label}」暂败（${redactSensitive(err.message)}），` +
               `${delay}ms 后重试（${attempt + 1}/${RETRY_MAX}）`
           );
           await sleep(delay);
@@ -238,7 +238,7 @@ async function runEngine(engineId, query, opts) {
     if (unusable) markRouteFailed(engineId, route, String(err?.message ?? ''));
     if (routes.length > 1) {
       opts.logger?.warn?.(
-        `websearch-direct: ${def.label} 入口「${route.label}」失败 — ${redactSensitive(err?.message ?? '')}；换下一条入口` +
+        `websearch-local: ${def.label} 入口「${route.label}」失败 — ${redactSensitive(err?.message ?? '')}；换下一条入口` +
           (unusable ? '' : '（该入口本身可用，不计入降级）')
       );
     }

@@ -27,8 +27,8 @@ window.__ModuleLoader__.load({ id: "dsh-websearch-local", factory: (require) => 
 	var Button = ui.Button;
 	var Switch = ui.Switch;
 
-	var NS = "websearch-direct";
-	var API = "/dsh-websearch-direct/api";
+	var NS = "websearch-local";
+	var API = "/dsh-websearch-local/api";
 
 	/* ------------------------------------------------------------ 文案 */
 
@@ -1182,14 +1182,14 @@ window.__ModuleLoader__.load({ id: "dsh-websearch-local", factory: (require) => 
 
 	/* ----------------------------------------------------------- 入口 */
 
-	var name = "dsh-websearch-direct";
+	var name = "dsh-websearch-local";
 	var inject = ["slots"];
 
 	function apply(ctx) {
 		ensureStyle();
 		var gaps = missingPrimitives(ui);
 		if (gaps.length > 0) {
-			console.warn("[dsh-websearch-direct] 宿主 ui-primitives 缺少 " + gaps.join(", ") + " — 设置卡片停用");
+			console.warn("[dsh-websearch-local] 宿主 ui-primitives 缺少 " + gaps.join(", ") + " — 设置卡片停用");
 			return;
 		}
 		ctx.inject(["settingsScope"], function (scoped) {

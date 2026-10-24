@@ -5,9 +5,9 @@
 // 原文 L119-121 的 `export const` 改为普通 const，底部统一导出。
 // ═══════════════════════════════════════════════════════════════════
 
-const name = 'websearch-direct';
+const name = 'websearch-local';
 const inject = ['web'];
-const SETTINGS_NAMESPACE = 'websearch-direct';
+const SETTINGS_NAMESPACE = 'websearch-local';
 
 /* ------------------------------------------------------------ UA / 常量 */
 
@@ -26,7 +26,7 @@ const UA_BROWSER =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' +
   'Chrome/126.0.0.0 Safari/537.36';
 const VERSION = '0.5.0';
-const UA_BOT = `dsh-websearch-direct/${VERSION} (+https://workbuddy.cn)`;
+const UA_BOT = `dsh-websearch-local/${VERSION} (+https://github.com/Repo-233/dsh-websearch-local)`;
 
 // —— v0.5：移除「意图自动路由」（原 PKG_INTENT / CODE_INTENT 两个意图正则已删除）。
 // 让模型用 web_search_engine 的 engine / maxResults 等参数自行选择引擎与参数，

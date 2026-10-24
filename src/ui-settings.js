@@ -18,12 +18,12 @@ import { runEngine } from './route-exec.js';
 /**
  * 设置 → 插件 里的「联网搜索（直连优先）」卡片走的是 dshmarket 验证过的三件套：
  *
- *   1. settings 命名空间（上面 apply 里已注册）——让设置页把 `websearch-direct`
+ *   1. settings 命名空间（上面 apply 里已注册）——让设置页把 `websearch-local`
  *      列进「插件配置」标签页；
- *   2. 自有 HTTP 路由 /dsh-websearch-direct/api/*——卡片读写配置的数据面；
+ *   2. 自有 HTTP 路由 /dsh-websearch-local/api/*——卡片读写配置的数据面；
  *   3. 浏览器半边 client/client.js——认领 `settings.plugin.item` 槽位（key=命名空间）。
  *
- * UI 配置持久化在 <DSH_HOME>/storages/websearch-direct/ui-config.json，
+ * UI 配置持久化在 <DSH_HOME>/storages/websearch-local/ui-config.json，
  * 与 cordis 配置（Config schema）解耦：卡片是这个文件的唯一写者。
  */
 
@@ -64,7 +64,7 @@ const UI_DEFAULT = {
 
 function uiStateFile() {
   const home = (process.env.DSH_HOME || '').trim() || join(homedir(), '.dsh');
-  return join(home, 'storages', 'websearch-direct', 'ui-config.json');
+  return join(home, 'storages', 'websearch-local', 'ui-config.json');
 }
 
 function asUrl(v) {
