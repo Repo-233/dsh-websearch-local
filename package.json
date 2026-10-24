@@ -18,7 +18,6 @@
   "files": [
     "src",
     "client",
-    "scripts",
     "cordis.patch.yml",
     "LICENSE",
     "README.md"

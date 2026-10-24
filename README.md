@@ -61,17 +61,7 @@
 
 ### 开发工作流
 
-```bash
-# 修改源码（不要直接改 dist）
-# 编辑 src/ 下的相应模块
-
-# 校验源码完整性
-node scripts/split-src.mjs --check
-
-# 重新构建（需要 esbuild）
-npx esbuild src/index.js --bundle --format=esm --platform=node --target=node22 \
-  --outfile=dist/index.js --log-level=warning
-```
+直接编辑 src/ 目录下的相应模块即可。由于这是一个源码仓库，不需要构建过程。
 
 2. **组合搜索优化**
    - 并发限制为 3 个成员
@@ -119,12 +109,7 @@ npx esbuild src/index.js --bundle --format=esm --platform=node --target=node22 \
 # 安装依赖
 npm install
 
-# 修改源码后重新构建
-npx esbuild src/index.js --bundle --format=esm --platform=node --target=node22 \
-  --outfile=dist/index.js --log-level=warning
-
-# 校验源码完整性
-node scripts/split-src.mjs --check
+# 直接修改 src/ 目录下的源码文件即可
 ```
 
 ### 方法二：npm 链接（开发模式）
@@ -153,15 +138,7 @@ npm link dsh-websearch-local
 | `timeoutMs` | 15000 | 单请求超时 |
 | `enableFetch` | true | 是否启用 web_fetch |
 
-### 构建脚本
 
-项目包含以下开发和测试脚本：
-
-| 脚本 | 用途 |
-|------|------|
-| `scripts/split-src.mjs` | 从 dist 重新生成 src 模块 |
-| `scripts/check-parity.mjs` | 校验源码与原版功能一致性 |
-| `scripts/live-smoke.mjs` | 联机测试搜索功能 |
 
 ## 支持的引擎
 
