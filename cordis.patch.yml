@@ -1,4 +1,4 @@
-# dsh bundle patch for dsh-websearch-direct.
+# dsh bundle patch for dsh-websearch-local.
 #
 # Applied as a profile layer in dsh.profile.bundles order; later layers
 # override earlier ones by entry id, so the `web` row repoint below wins over
@@ -7,8 +7,8 @@
 # bundles list if you want it to take precedence.
 
 - insert:
-    - id: websearch-direct
-      name: 'dsh-websearch-direct'
+    - id: websearch-local
+      name: 'dsh-websearch-local'
 
 # Repoint the web capability seam at this plugin's provider. Both capabilities
 # resolve here, so `web_search` and `web_fetch` are backed by this plugin on

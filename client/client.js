@@ -1,16 +1,15 @@
 /**
- * dsh-websearch-direct — 浏览器半边（设置 → 插件 → 联网搜索（直连优先）卡片）
+ * dsh-websearch-local — 浏览器半边（设置 → 插件 → 联网搜索（直连优先）卡片）
  *
- * v0.4.4 定稿版（用户预览稿拍板）：
- *   - 五个大类框，全部带下拉箭头标识（可点击展开/收起，展开旋转）
- *   - 代码仓库 = 各源直连入口（源名 + 直连标记 + 可编辑网址）
- *   - 代理仓库 = 独立大类，按网址类分组（GitHub / GitLab / 自定义源…），
- *     每组「＋ 代理网址」追加、每条可 × 移除、无代理的组显示「暂无代理网址」
- *   - 包管理 / 模型仓库 / 网页搜索：每源全部入口行内展示
- *   - 自定义源：源名称 + 官方网址建源，代理在代理仓库管理，源可移除
- *   - 外壳沿用 dshmarket 复刻的官方 PluginCard 视觉（--dsw-* 变量）
+ * Local fork based on dsh-websearch-direct v0.4.4:
+ *   - Forked from dsh-websearch-direct with local modifications
+ *   - Updated to support dsh-websearch-local package
+ *   - Maintains same UI and functionality as original
+ *   - Five category boxes with expand/collapse functionality
+ *   - Proxy management and custom source support
+ *   - Compatible with official PluginCard visual design
  */
-window.__ModuleLoader__.load({ id: "dsh-websearch-direct", factory: (require) => {
+window.__ModuleLoader__.load({ id: "dsh-websearch-local", factory: (require) => {
 	var module = { exports: {} };
 	var exports = module.exports;
 

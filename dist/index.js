@@ -1,12 +1,12 @@
-/* dsh-websearch-direct v0.5.0 — bundled from src/ */
+/* dsh-websearch-local v0.5.0 — bundled from src/ (local fork) */
 
 // src/constants.js
-var name = "websearch-direct";
+var name = "websearch-local";
 var inject = ["web"];
-var SETTINGS_NAMESPACE = "websearch-direct";
+var SETTINGS_NAMESPACE = "websearch-local";
 var UA_BROWSER = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 var VERSION = "0.5.0";
-var UA_BOT = `dsh-websearch-direct/${VERSION} (+https://workbuddy.cn)`;
+var UA_BOT = `dsh-websearch-local/${VERSION} (+https://github.com/Repo-233/dsh-websearch-local)`;
 var DEFAULTS = {
   proxyUrl: "",
   engineOrder: ["bing", "baidu", "duckduckgo"],

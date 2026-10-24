@@ -2,6 +2,8 @@
 
 给 DeepSeek Harness（dsh）用的 **免 API Key** 联网搜索 / 网页抓取插件。
 
+> **本地修改版本**：基于 [dsh-websearch-direct](https://github.com/MYCF711/dsh-websearch-direct) 0.4.11 版本修改，集成 0.5.0 版本功能，移除意图自动路由，增强错误处理和网络稳定性。
+
 零配置装上就能用：不填任何 Key、不走任何 LLM、不消耗模型 token。
 模型自己读取返回的检索结果 —— 也就是让 dsh 里的 agent 获得和「联网搜索工具」一样的能力。
 
@@ -457,3 +459,27 @@ dsh-websearch-direct/
 ```bash
 DSH_HOME=D:/dsh-1 node test-v0.3.mjs all
 ```
+
+---
+
+## 版权声明
+
+本项目基于 [dsh-websearch-direct](https://github.com/MYCF711/dsh-websearch-direct) 开源项目进行本地修改。
+
+- **原始项目**：[dsh-websearch-direct](https://github.com/MYCF711/dsh-websearch-direct) by MYCF711
+- **本地修改版本**：[dsh-websearch-local](https://github.com/Repo-233/dsh-websearch-local) by Repo-233
+- **许可证**：GPL-3.0
+
+### 主要修改
+
+- 重命名包名为 `dsh-websearch-local`
+- 升级版本至 0.5.0
+- 集成 0.5.0 版本的改进功能
+- 移除意图自动路由机制
+- 增强错误处理和网络重试逻辑
+- 添加 SSRF 防护功能
+- 改进日志和敏感信息脱敏
+
+### 兼容性说明
+
+本修改版本保持与原项目的 API 兼容性，可直接替换原插件使用。所有配置和数据格式完全兼容，迁移过程无需额外操作。
