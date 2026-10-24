@@ -1,4 +1,4 @@
-# dsh-websearch-direct — 仓库排除项
+# dsh-websearch-local — 仓库排除项
 # 打包产物：绝不入库（体积 + 每次构建都变）
 *.tgz
 
@@ -22,6 +22,7 @@ _probe-*
 _review*
 REVIEW-*.md
 
-# 内部工作区产物：不入库（发布前裁定 2026-09-21）
+# 构建产物：不入库（体积 + 每次构建都变）
+dist/
 _tmpdist/
 evidence/

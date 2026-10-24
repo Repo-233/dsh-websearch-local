@@ -1,13 +1,15 @@
 /**
- * dsh-websearch-local — 浏览器半边（设置 → 插件 → 联网搜索（直连优先）卡片）
- *
- * Local fork based on dsh-websearch-direct v0.4.4:
- *   - Forked from dsh-websearch-direct with local modifications
- *   - Updated to support dsh-websearch-local package
- *   - Maintains same UI and functionality as original
- *   - Five category boxes with expand/collapse functionality
- *   - Proxy management and custom source support
- *   - Compatible with official PluginCard visual design
+ * dsh-websearch-local — Browser settings card interface
+ * 
+ * This file is part of dsh-websearch-local
+ * 
+ * Copyright (C) 2026 MYCF711 (original author)
+ * Copyright (C) 2026 Local modifications
+ * 
+ * This program is derived from dsh-websearch-direct v0.4.4
+ * https://github.com/MYCF711/dsh-websearch-direct
+ * 
+ * See LICENSE file for more details.
  */
 window.__ModuleLoader__.load({ id: "dsh-websearch-local", factory: (require) => {
 	var module = { exports: {} };
