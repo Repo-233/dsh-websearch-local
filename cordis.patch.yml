@@ -15,5 +15,5 @@
 # every surface (Web / TUI / headless) without mounting tool-web ourselves.
 - id: web
   config:
-    searchProvider: websearch-direct
-    fetchProvider: websearch-direct
+    searchProvider: websearch-local
+    fetchProvider: websearch-local
