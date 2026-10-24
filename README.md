@@ -12,6 +12,7 @@
 - **设置卡片**：dsh Web UI 内置配置界面，支持代理、自定义引擎等
 - **SSRF 防护**：增强的 web_fetch 安全保护
 - **错误处理**：指数退避重试，网络稳定性改进
+- **模块化架构**：基于拆分后的源码模块，便于维护和扩展
 
 ## 主要修改
 
@@ -32,6 +33,45 @@
    - 移除 seam 层的自动意图识别
    - 引擎参数完全由模型显式选择
    - 保持原生 `web_search` 工具兼容性
+
+## 源码架构
+
+本插件采用模块化架构，将原来的单体 `dist/index.js` 拆分为 16 个独立模块：
+
+### 模块清单
+
+| 模块 | 职责 |
+|------|------|
+| `index.js` | 公共出口：插件身份、配置入口 |
+| `deps.js` | 可选依赖解析和降级处理 |
+| `constants.js` | 插件常量、UA、默认配置 |
+| `utils.js` | 工具函数：HTML 清洗、数值处理 |
+| `net.js` | 网络层：HTTP 请求和代理处理 |
+| `items.js` | 结果条目标签生成 |
+| `parsers.js` | 搜索引擎 HTML 解析器 |
+| `engines-meta.js` | 引擎表、分组、别名定义 |
+| `config.js` | 配置 Schema 定义 |
+| `route-exec.js` | 路由执行和健康度管理 |
+| `registry.js` | 引擎注册表和组合搜索 |
+| `pick-order.js` | 意图路由和源排序 |
+| `gh-mirrors.js` | GitHub 镜像加速处理 |
+| `tools-desc.js` | 工具描述和系统提示 |
+| `ui-settings.js` | 设置卡片状态和持久化 |
+| `plugin.js` | 插件主逻辑：提供者注册 |
+
+### 开发工作流
+
+```bash
+# 修改源码（不要直接改 dist）
+# 编辑 src/ 下的相应模块
+
+# 校验源码完整性
+node scripts/split-src.mjs --check
+
+# 重新构建（需要 esbuild）
+npx esbuild src/index.js --bundle --format=esm --platform=node --target=node22 \
+  --outfile=dist/index.js --log-level=warning
+```
 
 2. **组合搜索优化**
    - 并发限制为 3 个成员
@@ -71,6 +111,22 @@
 
 4. 重启 dsh
 
+### 方法二：源码开发模式
+
+如果需要修改源码：
+
+```bash
+# 安装依赖
+npm install
+
+# 修改源码后重新构建
+npx esbuild src/index.js --bundle --format=esm --platform=node --target=node22 \
+  --outfile=dist/index.js --log-level=warning
+
+# 校验源码完整性
+node scripts/split-src.mjs --check
+```
+
 ### 方法二：npm 链接（开发模式）
 
 ```bash
@@ -96,6 +152,16 @@ npm link dsh-websearch-local
 | `maxResults` | 8 | 每次返回结果数 |
 | `timeoutMs` | 15000 | 单请求超时 |
 | `enableFetch` | true | 是否启用 web_fetch |
+
+### 构建脚本
+
+项目包含以下开发和测试脚本：
+
+| 脚本 | 用途 |
+|------|------|
+| `scripts/split-src.mjs` | 从 dist 重新生成 src 模块 |
+| `scripts/check-parity.mjs` | 校验源码与原版功能一致性 |
+| `scripts/live-smoke.mjs` | 联机测试搜索功能 |
 
 ## 支持的引擎
 

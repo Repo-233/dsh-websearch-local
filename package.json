@@ -1,7 +1,7 @@
 {
   "name": "dsh-websearch-local",
   "version": "0.5.0",
-  "description": "免 API Key 的 dsh 联网搜索 / 网页抓取插件（引擎=逻辑源、入口=直连/镜像/加速回退）。v0.5.0：移除意图自动路由（引擎与参数由模型显式选择）；组合搜索并发上限 3 + 按需填充 + 到期返回已完成成员；429/503 与网络瞬时错误指数退避重试；web_fetch SSRF 防护；日志/错误令牌与代理凭据脱敏。本地修改版本。",
+  "description": "免 API Key 的 dsh 联网搜索 / 网页抓取插件（引擎=逻辑源、入口=直连/镜像/加速回退）。v0.5.0：移除意图自动路由（引擎与参数由模型显式选择）；组合搜索并发上限 3 + 按需填充 + 到期返回已完成成员；429/503 与网络瞬时错误指数退避重试；web_fetch SSRF 防护；日志/错误令牌与代理凭据脱敏。本地修改版本。基于模块化源码架构。",
   "keywords": [
     "dsh-plugin",
     "web-search",
@@ -10,14 +10,15 @@
   ],
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./src/index.js",
     "./client": "./client/client.js"
   },
   "files": [
-    "dist",
+    "src",
     "client",
+    "scripts",
     "cordis.patch.yml",
     "LICENSE",
     "README.md"
