@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 引擎挑选（pick-order）：pickOrder / renderSources
 // 决定搜索策略，包括引擎选择顺序和结果聚合逻辑
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { ENGINES, COMPOSITES } from './registry.js';
 import { ENGINE_ALIASES, baseEngineId } from './engines-meta.js';

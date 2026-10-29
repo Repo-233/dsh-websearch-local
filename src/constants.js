@@ -2,6 +2,10 @@
 // ═══════════════════════════════════════════════════════════════════
 // 插件身份与常量（constants）：name / inject / UA / 意图正则 / DEFAULTS
 // 定义插件的基本配置和常量设置
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 // ═══════════════════════════════════════════════════════════════════
 
 const name = 'websearch-local';

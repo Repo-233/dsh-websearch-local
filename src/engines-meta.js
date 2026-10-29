@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 引擎表（engines-meta）：ENGINES_META + 引擎分组 + 别名 + 派生注册表
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { repoItem, giteaPick, pkgItem } from './items.js';
 import { parseBing, parseBaidu, parseDdg } from './parsers.js';

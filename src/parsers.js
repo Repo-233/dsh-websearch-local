@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 网页结果解析器（parsers）：Bing / Baidu / DuckDuckGo HTML
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { decodeEntities, stripTags } from './utils.js';
 /* ------------------------------------------------------- web/html 解析器 */

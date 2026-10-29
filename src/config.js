@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 配置 Schema（config）：Config
 // 定义插件的配置验证模式，包括代理设置、搜索引擎顺序等核心参数。
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { Schema } from './deps.js';
 import { ALL_ENGINE_IDS } from './engines-meta.js';

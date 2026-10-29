@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 路由执行层（route-exec）：路由健康度 / 排序 / runRoute / runEngine
 // 处理搜索路由的执行逻辑，包括健康状态管理、路由排序和失败重试机制
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { ENGINES_META } from './engines-meta.js';
 import { UA_BOT, UA_BROWSER } from './constants.js';

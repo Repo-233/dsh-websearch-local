@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 插件入口（plugin）：apply(ctx, config) —— 提供者 / 工具 / 系统提示 / 设置数据面
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { unlinkSync } from 'node:fs';
 import { Config } from './config.js';

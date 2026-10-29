@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 设置卡片状态面：UI 模型 / 持久化 / 自定义引擎安装 / uiSnapshot
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { homedir } from 'node:os';
 import { join, dirname } from 'node:path';

@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // GitHub 加速镜像（gh-mirrors）：fetchWithMirrors
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { lookup } from 'node:dns/promises';
 import { request } from './net.js';

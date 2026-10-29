@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 网络层（net）：代理管线（undici 双坑注释）+ request / getJson
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { optionalImport } from './deps.js';
 import { redactSensitive } from './utils.js';

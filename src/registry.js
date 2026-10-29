@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 运行时注册表（registry）：ENGINES 构建 / membersOf / engineReady / 组合搜索
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { ENGINES_META, baseEngineId, customEngineIdsFor, REPO_ENGINES, PKG_ENGINES } from './engines-meta.js';
 import { runEngine } from './route-exec.js';

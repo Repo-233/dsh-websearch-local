@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 可选依赖解析（deps）：resolutionBases / optionalImport / Schema / defineTool
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';

@@ -1,0 +1,21 @@
+version = 1
+
+[[annotations]]
+path = "src/**/*.js"
+SPDX-FileCopyrightText = "2026 MYCF711 (original author)"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = "client/**/*.js"
+SPDX-FileCopyrightText = "2026 MYCF711 (original author)"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = "package.json"
+SPDX-FileCopyrightText = "2026 MYCF711 (original author)"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = "cordis.patch.yml"
+SPDX-FileCopyrightText = "2026 MYCF711 (original author)"
+SPDX-License-Identifier = "GPL-3.0-or-later"

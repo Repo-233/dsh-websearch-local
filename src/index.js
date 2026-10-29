@@ -5,6 +5,16 @@
  *
  * A zero-API-key web search / fetch provider for DeepSeek Harness (dsh).
  *
+ * This file is part of dsh-websearch-local
+ *
+ * Copyright (C) 2026 MYCF711 (original author)
+ * Copyright (C) 2026 Local modifications
+ *
+ * This program is derived from dsh-websearch-direct v0.4.4
+ * https://github.com/MYCF711/dsh-websearch-direct
+ *
+ * See LICENSE file for more details.
+ *
  * Why this exists: the stock `deepseek-official` channel burns a full model
  * round-trip per search and requires DEEPSEEK_API_KEY, while the popular
  * `web-search-free` plugin needs keys for endpoints that are almost all

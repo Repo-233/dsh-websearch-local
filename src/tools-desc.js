@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 工具描述（tools-desc）：routeLine / toolDescription / enginePrompt
 // 为模型的工具调用和系统提示生成描述性文本
+//
+// This file is part of dsh-websearch-local
+// Copyright (C) 2026 MYCF711 (original author)
+// Copyright (C) 2026 Local modifications
 
 import { ENGINES_META, REPO_ENGINES, PKG_ENGINES, WEB_ENGINES, ENGINE_IDS, ENGINE_ALIASES } from './engines-meta.js';
 import { membersOf, engineReady } from './registry.js';
