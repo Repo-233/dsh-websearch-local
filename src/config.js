@@ -1,9 +1,6 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 配置 Schema（config）：Config
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// 原文 L577 的 `export const Config` 改为 const，底部统一导出；未装 schemastery 时 Config 为 undefined（降级语义不变）。
-// ═══════════════════════════════════════════════════════════════════
+// 定义插件的配置验证模式，包括代理设置、搜索引擎顺序等核心参数。
 
 import { Schema } from './deps.js';
 import { ALL_ENGINE_IDS } from './engines-meta.js';

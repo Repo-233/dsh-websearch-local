@@ -1,8 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // GitHub 加速镜像（gh-mirrors）：fetchWithMirrors
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// ═══════════════════════════════════════════════════════════════════
 
 import { lookup } from 'node:dns/promises';
 import { request } from './net.js';

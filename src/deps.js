@@ -1,9 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 可选依赖解析（deps）：resolutionBases / optionalImport / Schema / defineTool
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// dist L56-60 的三个 node 内建 import 移到这里；L110-117 的顶层可选导入块原样保留。
-// ═══════════════════════════════════════════════════════════════════
 
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';

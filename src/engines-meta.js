@@ -1,31 +1,25 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 引擎表（engines-meta）：ENGINES_META + 引擎分组 + 别名 + 派生注册表
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// dist 设置页一段里的 BUILTIN_ROUTES / customEngineIdsFor 也是纯「读引擎表」的派生数据，归入本模块。
-// ═══════════════════════════════════════════════════════════════════
 
 import { repoItem, giteaPick, pkgItem } from './items.js';
 import { parseBing, parseBaidu, parseDdg } from './parsers.js';
 /* ----------------------------------------------------- 引擎 = 逻辑源 + 路由 */
 
 /**
- * 引擎 = 逻辑源（一份仓库 / 一个包生态 / 一个搜索引擎）。
- * 路由 = 指向同一份内容的入口：直连、镜像、加速代理、第三方索引。
+ * 引擎表：定义搜索引擎的基础信息和路由配置
+ * 包含仓库、依赖包、通用网页等类型的搜索引擎元数据
  *
- * 一个源只占一个引擎位。`github` 只出现一次，`api.github.com`、
- * `gh-proxy.com`、`gh-proxy.org` 都是它下面的路由 —— 同一份仓库的镜像
- * 不会在引擎列表里重复出现，也不会在 `repo` 合并里被当成两个源。
+ * 核心概念：
+ * - 引擎 = 逻辑源（一份仓库 / 一个包生态 / 一个搜索引擎）
+ * - 路由 = 指向同一份内容的入口：直连、镜像、加速代理、第三方索引
+ * - 路由层级 tier：0直连、1镜像代理、2第三方索引
  *
- * tier 是路由的实测性质，不是猜测：
- *   0  直连 / 权威端点
- *   1  镜像 / 加速代理（内容等价，改的只是访问路径）
- *   2  第三方索引（内容来自目标源，由第三方站点搬运，可能滞后）
- *       —— 这一档目前的候选全部没过「换个查询词结果会变」的内容校验，见 rejected
+ * 设计原则：
+ * - 同一逻辑源只占一个引擎位，不会重复出现
+ * - routes 只放实测可用的入口（双路验证通过）
+ * - 实测不可用的候选统一记录在 rejected 字段
  *
- * 下表的 routes 只放**实测可用**的入口（2026-09，本机直连 + HTTP 代理双路验证）。
- * 实测不可用的候选一律不占位，统一记在每个引擎的 `rejected` 里 ——
- * 免得下次有人再花一轮去试同一个死链。
+ * @module engines-meta
  */
 const ENGINES_META = {
   github: {
@@ -384,10 +378,30 @@ const WEB_ENGINES = ['bing', 'baidu', 'duckduckgo'];
 const COMPOSITE_ENGINES = ['repo', 'pkg'];
 const ENGINE_IDS = [...REPO_ENGINES, ...PKG_ENGINES, ...WEB_ENGINES, ...COMPOSITE_ENGINES];
 
+/* ----------------------------------------------------- 引擎分组 */
 /**
- * 路由别名。旧版本里 npmmirror 是一个独立引擎，但它和 npm 查的是同一份包数据，
- * 只是访问路径不同 —— 按「同一个源只占一个引擎位」的原则，它降级成 npm 的一条路由。
- * 旧写法仍然能用，只是现在语义是「强制走这条路由」。
+ * 引擎分组配置
+ * 将不同类型的搜索引擎按功能分类，便于管理和调用
+ */
+const REPO_ENGINES = ['github', 'gitlab', 'codeberg', 'gitea'];
+const PKG_ENGINES = ['npm', 'pypi', 'crates', 'maven', 'nuget', 'rubygems', 'huggingface'];
+const WEB_ENGINES = ['bing', 'baidu', 'duckduckgo'];
+
+/**
+ * 引擎ID列表
+ * 包含所有注册的搜索引擎ID，按功能分组
+ */
+const ENGINE_IDS = [
+  'github', 'gitlab', 'codeberg', 'gitea',
+  'npm', 'pypi', 'crates', 'maven', 'nuget', 'rubygems', 'huggingface',
+  'bing', 'baidu', 'duckduckgo'
+];
+
+/* ----------------------------------------------------- 引擎别名 */
+/**
+ * 路由别名配置
+ * 旧版本中某些引擎（如 npmmirror）曾是独立引擎，现降级为对应引擎的路由别名
+ * 保持向后兼容性的同时提供强制走特定路由的能力
  */
 const ENGINE_ALIASES = {
   npmmirror: { engine: 'npm', route: 'npmmirror' },

@@ -1,29 +1,38 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 路由执行层（route-exec）：路由健康度 / 排序 / runRoute / runEngine
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// ═══════════════════════════════════════════════════════════════════
+// 处理搜索路由的执行逻辑，包括健康状态管理、路由排序和失败重试机制
 
 import { ENGINES_META } from './engines-meta.js';
 import { UA_BOT, UA_BROWSER } from './constants.js';
 import { clampInt, redactSensitive } from './utils.js';
 import { request, getJson } from './net.js';
+
 /* ------------------------------------------------------------ 路由执行层 */
 
 /**
- * 路由健康状态：只活在进程内。失败过的路由会被排到同引擎的其它路由之后，
- * 一条都没有成功过的引擎下次仍然从第一条开始试 —— 所以这不是"记住了别试"，
- * 而是"这一轮先换条路"。外部网络恢复后不会留下永久性拉黑。
+ * 路由健康状态管理系统
+ * 只活在进程内，失败过的路由会被动态排序，但不会永久性拉黑
  */
 const routeHealth = new Map();
-const routeKey = (id, route) => `${id}|${route.label}`;
+const routeKey = (id, route) => `${id}|${route.label`;
 
+/**
+ * 标记路由失败，增加失败计数并记录错误信息
+ * @param {string} id - 引擎ID
+ * @param {object} route - 路由对象
+ * @param {string} message - 错误信息
+ */
 function markRouteFailed(id, route, message) {
   const k = routeKey(id, route);
   const cur = routeHealth.get(k) || { fails: 0, lastError: '' };
   routeHealth.set(k, { fails: cur.fails + 1, lastError: message });
 }
 
+/**
+ * 标记路由成功，清除健康状态记录
+ * @param {string} id - 引擎ID  
+ * @param {object} route - 路由对象
+ */
 function markRouteOk(id, route) {
   routeHealth.delete(routeKey(id, route));
 }

@@ -1,9 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
-// 设置卡片状态面（ui-settings）：UI 模型 / 持久化 / 自定义引擎安装 / uiSnapshot
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// custom 引擎的安装（installCustomEngines）与内置源追加入口同步（syncUiRoutes）本质是「把设置状态写进运行时引擎表」，故与卡片状态同模块，读取 registry/engines-meta。
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
+// 设置卡片状态面：UI 模型 / 持久化 / 自定义引擎安装 / uiSnapshot
 
 import { homedir } from 'node:os';
 import { join, dirname } from 'node:path';
@@ -11,23 +7,26 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { ENGINES_META, BUILTIN_ROUTES, customEngineIdsFor } from './engines-meta.js';
 import { ENGINES } from './registry.js';
 import { runEngine } from './route-exec.js';
+
 /* ----------------------------------------------------------------- plugin */
 
-/* ------------------------------------------------ 设置页 UI（卡片数据面） */
-
 /**
- * 设置 → 插件 里的「联网搜索（直连优先）」卡片走的是 dshmarket 验证过的三件套：
- *
- *   1. settings 命名空间（上面 apply 里已注册）——让设置页把 `websearch-local`
- *      列进「插件配置」标签页；
- *   2. 自有 HTTP 路由 /dsh-websearch-local/api/*——卡片读写配置的数据面；
- *   3. 浏览器半边 client/client.js——认领 `settings.plugin.item` 槽位（key=命名空间）。
- *
- * UI 配置持久化在 <DSH_HOME>/storages/websearch-local/ui-config.json，
- * 与 cordis 配置（Config schema）解耦：卡片是这个文件的唯一写者。
+ * UI 配置持久化管理
+ * 
+ * 设置页 UI 的三件套架构：
+ * 1. settings 命名空间 → 注册到插件配置标签页
+ * 2. HTTP 路由 /dsh-websearch-local/api/* → 卡片数据面读写
+ * 3. 浏览器端 client/client.js → 认领 settings.plugin.item 槽位
+ * 
+ * 持久化位置：<DSH_HOME>/storages/websearch-local/ui-config.json
+ * 与 cordis 配置解耦，该文件是卡片唯一的写者
  */
 
 /** 设置卡片上的四个大类：id → 内置源清单 + 自定义源的兼容类型。 */
+/**
+ * 设置页面的UI分类定义
+ * 每个类别包含内置引擎列表和自定义引擎的兼容类型
+ */
 const UI_CATEGORY_DEFS = [
   { id: 'code', label: '代码仓库', engines: ['github', 'gitlab', 'codeberg', 'gitea', 'gitee'], customKind: 'gitea' },
   { id: 'pkg', label: '包管理', engines: ['npm', 'crates', 'packagist', 'nuget', 'rubygems'], customKind: 'npm' },
@@ -35,16 +34,18 @@ const UI_CATEGORY_DEFS = [
   { id: 'web', label: '网页搜索', engines: ['bing', 'baidu', 'duckduckgo'], customKind: 'bing' },
 ];
 
-/** 每个大类最多允许几个自定义源（防呆上限）。 */
+/** 每个大类最多允许的自定义源数量（防呆上限） */
 const UI_CUSTOM_MAX = 8;
 
 /**
- * UI 配置数据模型版本（写进 ui-config.json 与 GET 快照）。
- *   v1 → v2：custom 从 {label,url,proxy} 变成 {name,url,proxies[]}
- *   v2 → v3：自定义代理的启停状态从 routeOverrides["<engId>|代理 N"]
- *            （按 label 定位，删除代理后 label 重排 → 状态错位）
- *            移进 custom.proxies[i].enabled（按数组位置定位）。
- * 读盘对 v1/v2/v3 都兼容：normaliseUiState 会把旧形状归一成当前形状。
+ * UI 配置数据模型版本管理
+ * 写入 ui-config.json 与 GET 快照时使用，确保向后兼容性
+ * 
+ * 版本历史：
+ * - v1 → v2：custom 从 {label,url,proxy} 变成 {name,url,proxies[]}
+ * - v2 → v3：自定义代理启停状态从 routeOverrides 移至 custom.proxies[i].enabled
+ * 
+ * 当前版本：v3 - 按数组位置定位代理状态，避免label重排导致状态错位
  */
 const UI_MODEL_VERSION = 3;
 

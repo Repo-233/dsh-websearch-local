@@ -1,9 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 运行时注册表（registry）：ENGINES 构建 / membersOf / engineReady / 组合搜索
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// membersOf 需要的 customEngineIdsFor 从 engines-meta 导入（避免与设置页模块成环）。
-// ═══════════════════════════════════════════════════════════════════
 
 import { ENGINES_META, baseEngineId, customEngineIdsFor, REPO_ENGINES, PKG_ENGINES } from './engines-meta.js';
 import { runEngine } from './route-exec.js';

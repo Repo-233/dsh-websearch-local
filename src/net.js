@@ -1,9 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 网络层（net）：代理管线（undici 双坑注释）+ request / getJson
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// dist L634-635 的 `const UA = UA_BROWSER`（request 默认 UA）随网络层迁入；L678-822 的代理注释与实现原样保留。
-// ═══════════════════════════════════════════════════════════════════
 
 import { optionalImport } from './deps.js';
 import { redactSensitive } from './utils.js';

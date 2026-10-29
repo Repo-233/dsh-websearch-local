@@ -1,9 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 插件入口（plugin）：apply(ctx, config) —— 提供者 / 工具 / 系统提示 / 设置数据面
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// 原文 L1698 的 `export function apply` 改为 function，由 index.js 统一导出。
-// ═══════════════════════════════════════════════════════════════════
 
 import { unlinkSync } from 'node:fs';
 import { Config } from './config.js';

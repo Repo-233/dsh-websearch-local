@@ -1,14 +1,18 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 工具描述（tools-desc）：routeLine / toolDescription / enginePrompt
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// ═══════════════════════════════════════════════════════════════════
+// 为模型的工具调用和系统提示生成描述性文本
 
 import { ENGINES_META, REPO_ENGINES, PKG_ENGINES, WEB_ENGINES, ENGINE_IDS, ENGINE_ALIASES } from './engines-meta.js';
 import { membersOf, engineReady } from './registry.js';
+
 /* ------------------------------------------------------------------ tools */
 
-/** 一个引擎的入口清单（只列多条入口的引擎，一条的不啰嗦）。 */
+/**
+ * 生成引擎的入口清单
+ * 对于只有单一入口的引擎返回空字符串，避免冗余信息
+ * @param {string} id - 引擎ID
+ * @returns {string} - 格式化的入口清单或空字符串
+ */
 function routeLine(id) {
   const rs = ENGINES_META[id]?.routes || [];
   if (rs.length <= 1) return '';
@@ -16,7 +20,16 @@ function routeLine(id) {
   return ` 　 入口（自动回退）: ${rs.map((r) => `${r.label}[${marks[r.tier] || r.tier}]`).join(' → ')}`;
 }
 
-/** Grouped description — the model's map of the engines. */
+/**
+ * 生成工具描述，用于模型的工具调用指南
+ * @param {object} cfg - 配置对象
+ * @returns {string[]} - 分段的描述文本
+ * 
+ * 描述内容包括：
+ * - 网页/代码/依赖包搜索的基本说明
+ * - 各引擎的特性、可用性和适用场景
+ * - 多源合并引擎的特殊说明
+ */
 function toolDescription(cfg) {
   const line = (id) => {
     const m = ENGINES_META[id];
@@ -48,9 +61,15 @@ function toolDescription(cfg) {
 }
 
 /**
- * System-prompt guidance placed right after the stock `web_search` section.
- * Tool descriptions tell the model *what exists*; this tells it *which one to
- * reach for*, which is what actually changes behaviour.
+ * 生成系统提示中的引擎选择指导
+ * 在标准 web_search 段落后添加引擎建议，引导模型选择最合适的搜索引擎
+ * @param {object} cfg - 配置对象
+ * @returns {string[]} - 引擎选择建议文本
+ * 
+ * 功能说明：
+ * - 过滤出可用的非复合引擎
+ * - 提供搜索策略和工具使用建议
+ * - 根据引擎特性和用户配置提供建议
  */
 function enginePrompt(cfg) {
   const usable = (id) => engineReady(id, cfg) && ENGINES_META[id].group !== 'composite';

@@ -1,8 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // ═══════════════════════════════════════════════════════════════════
 // 插件身份与常量（constants）：name / inject / UA / 意图正则 / DEFAULTS
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// 原文 L119-121 的 `export const` 改为普通 const，底部统一导出。
+// 定义插件的基本配置和常量设置
 // ═══════════════════════════════════════════════════════════════════
 
 const name = 'websearch-local';

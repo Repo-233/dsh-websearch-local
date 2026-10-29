@@ -1,18 +1,22 @@
-// ═══════════════════════════════════════════════════════════════════
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 引擎挑选（pick-order）：pickOrder / renderSources
-// 由 scripts/split-src.mjs 从 dist/index.js 按行切片自动生成；逻辑与 dist 逐字一致，
-// 只调整了 import/export 边界。改动请改本文件，或改 src/ 后重跑该脚本（--check 可验证）。
-// ═══════════════════════════════════════════════════════════════════
+// 决定搜索策略，包括引擎选择顺序和结果聚合逻辑
 
 import { ENGINES, COMPOSITES } from './registry.js';
 import { ENGINE_ALIASES, baseEngineId } from './engines-meta.js';
 import { DEFAULTS } from './constants.js';
-/* --------------------------------------------------------------- routing */
+
+/* -------------------------------------------------------------------- routing */
 
 /**
- * Decide which engines to try, in order. An explicit choice always wins.
- * 意图推断已移除（v0.5）：不再根据关键词自动跳到 repo/pkg 组合；由模型通过
- * web_search_engine 的 engine 参数自行选择来源，maxResults 等参数亦由模型控制。
+ * 根据查询参数和配置决定引擎尝试顺序
+ * @param {string} query - 搜索查询词
+ * @param {string} explicit - 显式指定的引擎（可选）
+ * @param {object} cfg - 配置对象
+ * @returns {string[]} - 要尝试的引擎ID数组
+ * 
+ * 意图推断已移除（v0.5）：不再根据关键词自动跳到 repo/pkg 组合；
+ * 由模型通过 web_search_engine 的 engine 参数自行选择来源。
  * 省略 engine 时，按 engineOrder（默认 Bing → 百度 → DuckDuckGo）顺序尝试。
  */
 function pickOrder(query, explicit, cfg) {
