@@ -387,19 +387,6 @@ const ENGINE_IDS = [...REPO_ENGINES, ...PKG_ENGINES, ...WEB_ENGINES, ...COMPOSIT
  * 引擎分组配置
  * 将不同类型的搜索引擎按功能分类，便于管理和调用
  */
-const REPO_ENGINES = ['github', 'gitlab', 'codeberg', 'gitea'];
-const PKG_ENGINES = ['npm', 'pypi', 'crates', 'maven', 'nuget', 'rubygems', 'huggingface'];
-const WEB_ENGINES = ['bing', 'baidu', 'duckduckgo'];
-
-/**
- * 引擎ID列表
- * 包含所有注册的搜索引擎ID，按功能分组
- */
-const ENGINE_IDS = [
-  'github', 'gitlab', 'codeberg', 'gitea',
-  'npm', 'pypi', 'crates', 'maven', 'nuget', 'rubygems', 'huggingface',
-  'bing', 'baidu', 'duckduckgo'
-];
 
 /* ----------------------------------------------------- 引擎别名 */
 /**

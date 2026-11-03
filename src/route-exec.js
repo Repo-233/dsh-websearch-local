@@ -18,7 +18,7 @@ import { request, getJson } from './net.js';
  * 只活在进程内，失败过的路由会被动态排序，但不会永久性拉黑
  */
 const routeHealth = new Map();
-const routeKey = (id, route) => `${id}|${route.label`;
+const routeKey = (id, route) => `${id}|${route.label}`;
 
 /**
  * 标记路由失败，增加失败计数并记录错误信息
